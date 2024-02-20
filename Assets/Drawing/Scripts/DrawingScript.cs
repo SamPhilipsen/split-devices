@@ -9,12 +9,20 @@ public class DrawingScript : MonoBehaviour
     public DrawingManager drawingManager;
 
     LineRenderer currentLineRenderer;
-
     Vector2 lastPos;
-
+    bool allowDraw;
+    private void Start()
+    {
+        allowDraw = true;
+    }
     private void Update()
     {
         Drawing();
+    }
+
+    public void ToggleActive()
+    {
+        allowDraw = !allowDraw;
     }
 
     bool IsMouseOverImage()
@@ -39,7 +47,7 @@ public class DrawingScript : MonoBehaviour
 
     void Drawing()
     {
-        if (!IsMouseOverImage()) {
+        if (!IsMouseOverImage() || !allowDraw) {
             return;
         }
 
