@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonClick : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class ButtonClick : MonoBehaviour
     void Start()
     {
         Button btn = hidenseekButton.GetComponent<Button>();
-        btn.onClick.AddListener(TaskOnClick);     
+        btn.onClick.AddListener(TaskOnClick);
     }
 
     // Update is called once per frame
@@ -21,7 +22,7 @@ public class ButtonClick : MonoBehaviour
     }
 
     void TaskOnClick() 
-    {        
-        Debug.Log ("Click click click");
+    {
+        SceneManager.LoadScene("sampleScene");
     }
 }
