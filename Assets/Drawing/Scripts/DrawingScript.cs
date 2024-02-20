@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,10 +17,29 @@ public class DrawingScript : MonoBehaviour
         Drawing();
     }
 
+    bool IsMouseOverImage()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            PointerEventData eventData = new PointerEventData(EventSystem.current);
+            eventData.position = Input.mousePosition;
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventData, results);
+
+            foreach (RaycastResult result in results)
+            {
+                if (result.gameObject.activeSelf && result.gameObject.tag == "Photo")
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
 
     void Drawing()
     {
-        if (CanDraw.instance.IsHoveringOverUI()) {
+        if (!IsMouseOverImage()) {
             return;
         }
 
