@@ -38,30 +38,35 @@ public class Cams : MonoBehaviour
     {
         if (Counter == 0)
         {
-            Counter = 1;
+            Counter++;
             Cam2.gameObject.SetActive(true);
             Cam2Image.gameObject.SetActive(false);
-
-            CaptureAndApplyTexture(webCamTexture, Cam1Image, Cam1);
             webCamTexture.Stop();
             yield return new WaitForEndOfFrame();
             webCamTexture2.Play();
         }
         else if (Counter == 1)
         {
-            Counter = 2;
+            Counter++;
             CaptureAndApplyTexture(webCamTexture2, Cam2Image, Cam2);
             yield return new WaitForEndOfFrame();
             webCamTexture2.Stop();
         }
-        else
+        else if(Counter == 2)
         {
-            Counter = 0;
+            Counter++;
             Cam1.gameObject.SetActive(true);
             Cam1Image.gameObject.SetActive(false);
             yield return new WaitForEndOfFrame();
             webCamTexture.Play();
-        }        
+        }
+        else
+        {
+            Counter = 0;
+            CaptureAndApplyTexture(webCamTexture, Cam1Image, Cam1);
+            webCamTexture.Stop();
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     public void CaptureAndApplyTexture(WebCamTexture texture, RawImage image, Image cam)
