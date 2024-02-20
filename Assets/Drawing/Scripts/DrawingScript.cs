@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,18 +9,45 @@ public class DrawingScript : MonoBehaviour
     public DrawingManager drawingManager;
 
     LineRenderer currentLineRenderer;
-
     Vector2 lastPos;
-
+    bool allowDraw;
+    private void Start()
+    {
+        allowDraw = true;
+    }
     private void Update()
     {
         Drawing();
     }
 
+    public void ToggleActive()
+    {
+        allowDraw = !allowDraw;
+    }
+
+    bool IsMouseOverImage()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            PointerEventData eventData = new PointerEventData(EventSystem.current);
+            eventData.position = Input.mousePosition;
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventData, results);
+
+            foreach (RaycastResult result in results)
+            {
+                if (result.gameObject.activeSelf && result.gameObject.tag == "Photo")
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
 
     void Drawing()
     {
-        if (CanDraw.instance.IsHoveringOverUI()) {
+        if (!IsMouseOverImage() || !allowDraw) {
             return;
         }
 
