@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ public class Cams : MonoBehaviour
     WebCamTexture webCamTexture2;
 
     int Counter;
+    bool FirstTime = true;
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +27,6 @@ public class Cams : MonoBehaviour
         Cam2.GetComponent<Image>().material.mainTexture = webCamTexture2;
         webCamTexture.Play();
         Counter = 0;
-
-        
     }
 
     public void TakePic()
@@ -41,6 +41,12 @@ public class Cams : MonoBehaviour
             Counter++;
             Cam2.gameObject.SetActive(true);
             Cam2Image.gameObject.SetActive(false);
+
+            if (FirstTime)
+            {
+                FirstTime = false;
+                CaptureAndApplyTexture(webCamTexture, Cam1Image, Cam1);
+            }
             webCamTexture.Stop();
             yield return new WaitForEndOfFrame();
             webCamTexture2.Play();
@@ -67,6 +73,8 @@ public class Cams : MonoBehaviour
             webCamTexture.Stop();
             yield return new WaitForEndOfFrame();
         }
+
+        Debug.Log(Counter);
     }
 
     public void CaptureAndApplyTexture(WebCamTexture texture, RawImage image, Image cam)
