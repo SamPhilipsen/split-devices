@@ -15,49 +15,34 @@ public class MainMenu : MonoBehaviour
     public Button goback;
     public Button play;
 
-    public void Start()
-    {
-        snapnguess.onClick.AddListener(ShowGuess);
-
-        snapnpose.onClick.AddListener(ShowPose);
-
-        snapncopy.onClick.AddListener(ShowCopy);
-
-        goback.onClick.AddListener(GoBack);
-        play.onClick.AddListener(Play);
-
-    }
+    [SerializeField] GameObject SnapGuess;
+    [SerializeField] GameObject Snapnpose;
+    [SerializeField] GameObject Snapncopy;
 
     public void Play()
     {
-        SceneManager.LoadScene("CamTest 1");
+        SceneManager.LoadScene(1);
     }
 
     public void ShowGuess()
     {
         Instructions.SetActive(true);
         HideMenu();
-
-        GameObject instructionsWindow = GameObject.Find("Snap n Guess");
-        instructionsWindow.SetActive(true);
+        SnapGuess.SetActive(true);
     }
 
     public void ShowPose()
     {
         Instructions.SetActive(true);
         HideMenu();
-
-        GameObject instructionsWindow = GameObject.Find("Snap n Pose");
-        instructionsWindow.SetActive(true);
+        Snapnpose.SetActive(true);
     }
 
     public void ShowCopy()
     {
         Instructions.SetActive(true);
         HideMenu();
-
-        GameObject instructionsWindow = GameObject.Find("Snap n Copy");
-        instructionsWindow.SetActive(true);
+        Snapncopy.SetActive(true);
     }
 
     public void GoBack()
@@ -69,6 +54,9 @@ public class MainMenu : MonoBehaviour
     public void HideInstructions()
     {
         Instructions.SetActive(false);
+        SnapGuess.SetActive(false);
+        Snapnpose.SetActive(false);
+        Snapncopy.SetActive(false);
         HideMenu();
     }
 
